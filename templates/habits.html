@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+{% for index in range(habz|length) %} 
+    <section class="habits">
+        <h1 class="habits__habit_title">{{ habz[index][0] }}</h1>
+        <p class="habits__habit_description"> {{ habz[index][1] }}</p>
+    </section>
+{% endfor %}
+{% endblock %}

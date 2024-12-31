@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block date_navigation %}
+<section class="dates">
+<!-- add a --curent to the class if the loop.index0 == 3 (position 4 from starting point) -->
+    {% for date in date_range(selected_date) %}
+        <a class="dates__link {{ 'dates__link--current' if loop.index0 == 3 else '' }}" 
+           href="{{ url_for('habz.dailies', date=date) }}">
+            <time class="date" datetime="{{ date }}">
+                <span>{{ date.strftime("%a") }}</span> <!-- day of the week--> 
+                <span>{{ date.strftime("%d") }}</span> <!-- number of day-->
+            </time>
+        </a>
+    {% endfor %}
+</section>
+{% endblock %}
+
+{% block main_content %}
+    <section class="dailies_section">
+        {% for daily in habits_list %}
+            {% set completed = daily in completions %}
+        
+            {% if completed %}
+                <div class="dailies completed">
+                    <p class="dailies__name">
+                        {{ daily }}
+                    </p>
+                        <svg class="dailies__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
+                </div>
+        
+            {% else %}
+                <div class="dailies">
+                    <form method="POST" class="dailies__form" action="{{ url_for('habz.completed') }}"> 
+                        <input type="hidden" name="dailyName" value="{{ daily }}" />
+                        <input type="hidden" name="date" value="{{ selected_date }}" />
+                        <button type="submit" class="daily__button">
+                            {{ daily }}
+                        </button>
+                    </form>
+                </div>
+        
+            {% endif %}        
+        {% endfor %}
+    </section>
+{% endblock %}

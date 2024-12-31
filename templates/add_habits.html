@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block form_content %}
+    <form class="form_habits" method="POST">
+        <textarea class="form_habits__input" 
+                  id="habits_title" 
+                  name="habits_title" 
+                  rows="3" 
+                  placeholder="What desirable habit you working on?"
+                  maxlength="40" ></textarea>
+        <textarea class="form_habits__input" 
+              id="habits_descriptions" 
+              name="habits_descriptions" 
+              rows="9" 
+              placeholder="Type a description about this desirable habit, a motivational reminder or an example. With a maximum of 140 words."
+              maxlength="900" ></textarea>
+         <button class="form__submit" type="submit">Create this habit</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="keywords" content="Habits, Goals, Tracker, Journal, Diary, RodgeHabz" />
+        <meta name="description" content="A journal or diary for tracking habits and goals. Inspired by Udemy course 'Web Developer Bootcamp with Flask and Python in 2024', from Jose Salvatierra." />
+        <meta name="author" content="Rogier Hetem" />
+        <meta http-equiv="refresh" content="3600" />
+        
+        <link rel="stylesheet" href="{{ url_for('habz.static', filename='css/stylesheet.css') }}" />
+        
+        <title>Rodge{{ title }}</title>
+    </head>   
+    <body>
+        <header class="navbar">
+                <img class="navbar__logo" 
+                     src="{{ url_for('habz.static',filename='rodgehabz_logo.svg') }}"
+                     alt="The RodgeHabz logo, square and circle"
+                     title="Two simple shapes. A white circle with green-outline overlapping a gray diamond."
+                     />               
+                
+            <div class="navbar__brand">
+                RodgeHabz
+                <ul class="navbar__navigation">
+                    {% if "habit" in request.endpoint %}
+                        <li class="navbar__navigation-item-first"><a href="{{ url_for('habz.habits') }}" class="navbar__link">Habits</a></li>
+                        <li class="navbar__navigation-item-second"><a href="{{ url_for('habz.dailies') }}"  class="navbar__link">Dailies</a></li>
+                    {% elif "dail" in request.endpoint %}
+                        <li class="navbar__navigation-item-second"><a href="{{ url_for('habz.habits') }}" class="navbar__link">Habits</a></li>
+                        <li class="navbar__navigation-item-first"><a href="{{ url_for('habz.dailies') }}"  class="navbar__link">Dailies</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </header>
+        <main class="main">
+            <section class="adding_panel">
+                <h1 class="adding_panel__title">{{ title }}</h1>
+                {% if "add" not in request.endpoint %}
+                    {% if "habit" in request.endpoint %} <!-- checks what is in the linkpart after the first / -->
+                        <a href="{{ url_for('habz.add_habits') }}", class="adding_panel__link">+ add habit</a>
+                    {% endif %}
+                {% endif %}
+            </section>
+            {% block date_navigation %}
+            {% endblock %}
+            {% block form_content %}
+            {% endblock %}
+            {% block main_content %}
+            {% endblock %}
+        </main>
+    </body>
+</html>
